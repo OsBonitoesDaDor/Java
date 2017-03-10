@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class Aula3 {
+public class Lista1 {
 	static Scanner scan = new Scanner(System.in);
 	static Random rand  = new Random();
 	public static void main(String[] args) {
