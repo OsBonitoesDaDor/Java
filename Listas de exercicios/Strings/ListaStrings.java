@@ -455,32 +455,40 @@ public class ListaStrings {
 	}
 
 	static void ex8(){
-		String[] numeros = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K"}, naipes = {"E", "C", "O", "P"} ;
-		String[] jaEscolhidos = new String[numeros.length * naipes.length];
-
+		String[] numeros = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"}, naipes = {"E", "C", "O", "P"} ;
+		String[] baralho = new String[numeros.length * naipes.length];
+		String temp;
+		int randInd;
 		for (int i = 0; i < naipes.length; i++) {
 			for (int j = 0; j < numeros.length; j++) {
 				String string = numeros[j];
-				System.out.print(string + naipes[i] +  ", ");
+				//System.out.print(string + naipes[i] +  ", ");
+				baralho[ ( (i*numeros.length) + j)] = numeros[j] + naipes[i];
 				
 			}
 			System.out.println();
 		}
+	
+		for (int i = 0; i < baralho.length; i++) {
+			System.out.print(baralho[i] + ", ");
+			if(i % 13 == 0 && i != 0)
+				System.out.println();
+		}
+		System.out.println();
 		System.out.println("-----------------------------");
-	
+		for (int i = 0; i < baralho.length; i++) {
+			randInd = rand.nextInt(baralho.length);
+			temp = baralho[randInd];
+			baralho[randInd] = baralho[i];
+			baralho[i] = temp;
+		}
 		
-			
-		/**
-		 * 
-		 * 
-		 * ACABAR ESSA BUCETA
-		 * 
-		 * 
-		 * 
-		 * 	
-		 */
+		for (int i = 0; i < baralho.length; i++) {
+			System.out.print(baralho[i] + ", ");
+			if(i % 13 == 0 && i != 0)
+				System.out.println();
+		}
 	
-	//	for
 	}
 
 }
