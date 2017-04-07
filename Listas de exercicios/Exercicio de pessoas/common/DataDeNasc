@@ -1,0 +1,75 @@
+package common;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class DataDeNasc {
+	private String data;
+	private int dia, mes, ano;
+	
+	public DataDeNasc(String data){
+			this.data = data;
+			this.dia = Integer.parseInt(data.split("/")[0]);
+			this.mes = Integer.parseInt(data.split("/")[1]);
+			this.ano = Integer.parseInt(data.split("/")[2]);
+	}
+	
+	public int getDia() {
+		return dia;
+	}
+
+	public void setDia(int dia) {
+		this.dia = dia;
+	}
+
+	public int getMes() {
+		return mes;
+	}
+
+	public void setMes(int mes) {
+		this.mes = mes;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	//TODO: Fazer essa parada funcionar
+	public boolean isValid(){
+		DateFormat df = new SimpleDateFormat(data);
+		df.setLenient(false);
+		try{
+			df.parse(data);
+			return true;
+		}catch(ParseException e){
+			return false;
+		}
+	}
+	
+	//TODO: Fazer essa parada funcionar
+	public static boolean isValid(String data){
+		DateFormat df = new SimpleDateFormat(data);
+		df.setLenient(false);
+		try{
+			df.parse(data);
+			return true;
+		}catch(ParseException e){
+			return false;
+		}
+	}
+	
+	public String toString(){
+		if(this.data ==null)
+			return "Data nao inserida";
+		if(isValid(this.data))
+			return "Data de nascimento invalida";
+		return this.data;
+	}
+	
+
+}
