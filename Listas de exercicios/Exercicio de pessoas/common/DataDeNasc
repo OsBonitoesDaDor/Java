@@ -1,12 +1,11 @@
 package common;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class DataDeNasc {
 	private String data;
-	private int dia, mes, ano;
+	private int dia, mes;
+	private int ano;
 	
 	public DataDeNasc(String data){
 			this.data = data;
@@ -39,34 +38,27 @@ public class DataDeNasc {
 		this.ano = ano;
 	}
 
-	//TODO: Fazer essa parada funcionar
 	public boolean isValid(){
-		DateFormat df = new SimpleDateFormat(data);
-		df.setLenient(false);
-		try{
-			df.parse(data);
-			return true;
-		}catch(ParseException e){
-			return false;
+		
+		if(this.ano > 0 && this.mes > 0 && this.dia > 0 && this.ano < Calendar.getInstance().get(Calendar.YEAR) 
+			&& this.mes < Calendar.getInstance().get(Calendar.MONTH) && this.dia < Calendar.getInstance().get(Calendar.DAY_OF_MONTH) 
+			&& this.ano > Calendar.getInstance().get(Calendar.YEAR) -200){
+				return true;
 		}
+		return false;
 	}
 	
-	//TODO: Fazer essa parada funcionar
 	public static boolean isValid(String data){
-		DateFormat df = new SimpleDateFormat(data);
-		df.setLenient(false);
-		try{
-			df.parse(data);
+		DataDeNasc d = new DataDeNasc(data);
+		if(d.getAno() < Calendar.getInstance().get(Calendar.YEAR) && d.getMes() < Calendar.getInstance().get(Calendar.MONTH) && d.getDia() < Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
 			return true;
-		}catch(ParseException e){
-			return false;
-		}
+		return false;
 	}
 	
 	public String toString(){
 		if(this.data ==null)
 			return "Data nao inserida";
-		if(isValid(this.data))
+		if(isValid())
 			return "Data de nascimento invalida";
 		return this.data;
 	}
