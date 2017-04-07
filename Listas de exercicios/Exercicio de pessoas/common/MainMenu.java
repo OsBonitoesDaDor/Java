@@ -35,17 +35,22 @@ public class MainMenu {
 	
 	private static void addPessoa(){
 		Pessoa p;
-		String nome, email;		
+		String nome, email, data;		
 		System.out.println("Digite o nome");
 		nome = scan.nextLine();	
 		nome = scan.nextLine();
 		System.out.println("Digite o email");
 		email = scan.nextLine();
-		
-		if(email.equals(null))
+		System.out.println("Qual a data de nascimento?");
+		data = scan.nextLine();
+		if(email.equals(null) && data.equals(null))
 			p = new Pessoa(nome);
-		
-		p = new Pessoa(nome, email);
+		else if(email.equals(null))
+			p = new Pessoa(nome, null, new DataDeNasc(data));
+		else if(data.equals(null))
+			p = new Pessoa(nome, email, null);
+		else	
+			p = new Pessoa(nome, email, new DataDeNasc(data));
 		
 		listaContatos.addPessoa(p);
 	}
@@ -60,14 +65,14 @@ public class MainMenu {
 			if(p.getNome().equalsIgnoreCase(nome)){
 				System.out.println("OK!");
 				listaContatos.delPessoa(p);
-				return;
 			}
 		}
 		
 		System.out.println("Pessoa com esse nome nao encontrada");
 	}
 
-	private static void mostraPessoas(){
+	private static void mostraPessoas(){//
+		//TODO: Mostrar apenas um contato
 		for (int i = 0; i < listaContatos.getArrayLenght(); i++) {
 			
 			System.out.println(listaContatos.contatoAt(i).toString());
