@@ -25,9 +25,6 @@ public class MainMenu {
 				case 3:
 					mostraPessoas();
 					break;
-				case 4:
-					//TODO: mostr1pessoa
-					break;
 			}
 			System.out.println("Dalhee");
 		}while(op > 0);
@@ -47,7 +44,7 @@ public class MainMenu {
 			p = new Pessoa(nome);
 		else if(email.equals(null))
 			p = new Pessoa(nome, null, new DataDeNasc(data));
-		else if(data.equals(null))
+		else if(data == "")
 			p = new Pessoa(nome, email, null);
 		else	
 			p = new Pessoa(nome, email, new DataDeNasc(data));
@@ -57,26 +54,32 @@ public class MainMenu {
 	
 	private static void removePessoa(){
 		String nome;
+		boolean achou = false;
 		System.out.println("Qual o nome da pessoa a ser removida?");
 		nome = scan.next();
-		Pessoa p;
 		for (int i = 0; i < listaContatos.getArrayLenght(); i++) {
-			p = listaContatos.contatoAt(i);
-			if(p.getNome().equalsIgnoreCase(nome)){
-				System.out.println("OK!");
-				listaContatos.delPessoa(p);
+			if(listaContatos.contatoAt(i).getNome().contains(nome)){
+				System.out.println("Achou em " + i + "Com id " + listaContatos.contatoAt(i).getId());
+				listaContatos.delPessoa(listaContatos.contatoAt(i));
+				achou = true;
 			}
 		}
-		
-		System.out.println("Pessoa com esse nome nao encontrada");
+		if(!achou)
+			System.out.println("Pessoa com esse nome nao encontrada");
 	}
 
-	private static void mostraPessoas(){//
-		//TODO: Mostrar apenas um contato
-		for (int i = 0; i < listaContatos.getArrayLenght(); i++) {
-			
-			System.out.println(listaContatos.contatoAt(i).toString());
-		}
+	private static void mostraPessoas(){
+		System.out.println("Digite o nome da pessoa a ser mostrada, ou deixe em branco para mostar todas.");
+		String nome = scan.nextLine();
+		nome = scan.nextLine();
+		if(nome.equals(""))
+			for (int i = 0; i < listaContatos.getArrayLenght(); i++) 
+				System.out.println(listaContatos.contatoAt(i).toString());			
+		else
+			for (int i = 0; i < listaContatos.getArrayLenght(); i++) 
+				if(listaContatos.contatoAt(i).getNome().contains(nome))
+					System.out.println(listaContatos.contatoAt(i).toString());	
+		
 	}
 
 }
