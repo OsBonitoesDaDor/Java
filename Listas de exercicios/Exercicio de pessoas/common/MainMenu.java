@@ -6,28 +6,31 @@ import java.util.Scanner;
 public class MainMenu {
 	
 	private static Scanner scan;
-	private static int op;
+	private static char op;
 	private static Contatos listaContatos= new Contatos();
 	public static void main(String[] args) throws IOException{
-		System.out.println("\nEntre com a operacao\n 1 - addPessoa\n2 - Remove pessoa\n3 - Mostra pessoa\n");
 		scan = new Scanner(System.in);
 		do{
-			op = scan.nextInt();
-			
+			do{
+				System.out.println("\nEntre com a operacao\n1 - addPessoa\n2 - Remove pessoa\n3 - Mostra pessoa\n0 - Sair\n");
+				op = scan.next().toString().toCharArray()[0];
+				if(op <= '0' || op >= '9')
+					System.out.println("Entrada invalida, por favor, tente novamente");
+			}while(op <= '0' || op >= '9');
+		
 			switch(op){
-				case 1:
+				case '1':
 					addPessoa();
 					break;
-				
-				case 2:
+				case '2':
 					removePessoa();
 					break;
-				case 3:
+				case '3':
 					mostraPessoas();
 					break;
 			}
-			System.out.println("Dalhee");
-		}while(op > 0);
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		}while(op != '0');
 	}
 	
 	private static void addPessoa(){
@@ -79,7 +82,6 @@ public class MainMenu {
 			for (int i = 0; i < listaContatos.getArrayLenght(); i++) 
 				if(listaContatos.contatoAt(i).getNome().contains(nome))
 					System.out.println(listaContatos.contatoAt(i).toString());	
-		
-	}
 
+	}
 }
