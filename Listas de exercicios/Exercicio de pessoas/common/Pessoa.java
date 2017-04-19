@@ -57,7 +57,7 @@ public class Pessoa {
 	}
 	
 	public String toString(){
-		return "Id: " + id + "\tNome: " + this.nome +"\tEmail: "+ this.email + "\tNascimento:" + data;
+		return "Id: " + id + "\tNome: " + this.nome +"\tEmail: "+ (email == null ? "Email nao informado" : email) + "\tNascimento:" + (data == null ? "Nascimento nao informado" : data) + "\tIdade: " + (data.idade() > 0 ? data.idade() : "Idade nao informada");
 	}
 	
 }
