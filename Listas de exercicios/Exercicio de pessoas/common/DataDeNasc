@@ -1,65 +1,110 @@
 package common;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DataDeNasc {
 	private String data;
-	private int dia, mes;
-	private int ano;
-	public DataDeNasc(String data){
-			this.data = data;
-			//Checa se existe data
-			if( data.equals("") && data.split("/").length != 3){
-				this.dia = 0;
-				this.mes = 0;
-				this.ano= 0;	
-			}else{		
-				String temp;
-				StringBuilder aux = new StringBuilder();
-				//Tira os caracteres nao numericos do mes
-				temp = data.split("/")[1];
-				for (int i = 0; i < temp.length(); i++) {
-					if(temp.charAt(i) >= '0' && temp.charAt(i) <='9')
-						aux.append(temp.charAt(i));
-				}
-				//Inicializa o mes
-				mes = Integer.parseInt(aux.toString());
-				if(mes < 0 && mes > 13)
-					mes = 0;
-				aux.equals("");
-				
-				//Tira os caracteres nao numericos do ano
-				temp = data.split("/")[2];
-				for (int i = 0; i < temp.length(); i++) {
-					if(temp.charAt(i) >= '0' && temp.charAt(i) <='9')
-						aux.append(temp.charAt(i));
-				}
-				//Inicializa o ano
-				ano = Integer.parseInt(aux.toString());
-				aux.equals("");
-				
-				//Tira os caracteres nao numericos do dia
-				temp = data.split("/")[0];
-				for (int i = 0; i < temp.length(); i++) {
-					if(temp.charAt(i) >= '0' && temp.charAt(i) <='9')
-						aux.append(temp.charAt(i));
-				}
-				//Inicializa o dia
-				dia = Integer.parseInt(aux.toString());
-				if(mes % 2 == 0 && mes != 2){
-					if(dia > 30)
-						dia = -1;
-				}else if(mes == 2){
-					if(dia >=28)
-						dia = -1;
-				}else{
-					if (dia > 31)
-						dia = -1;
-				}
-				aux.equals("");
-				}
+	private int dia, mes, ano;
+
+	public DataDeNasc(String data) {
+		this.data = data;
+		// Checa se existe data
+		if (data.equals("") && data.split("/").length != 3) {
+			this.dia = 0;
+			this.mes = 0;
+			this.ano = 0;
+		} else {
+			String temp;
+			StringBuilder aux = new StringBuilder();
+			// Tira os caracteres nao numericos do dia
+			temp = data.split("/")[0];
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp.charAt(i) >= '0' && temp.charAt(i) <= '9')
+					aux.append(temp.charAt(i));
+			}
+			// Inicializa o dia
+			dia = Integer.parseInt(aux.toString());
+			if (mes % 2 == 0 && mes != 2) {
+				if (dia > 30)
+					dia = -1;
+			} else if (mes == 2) {
+				if (dia >= 28)
+					dia = -1;
+			} else {
+				if (dia > 31)
+					dia = -1;
+			}
+			//Limpa a string auxiliar
+			aux = new StringBuilder();
+
+			// Tira os caracteres nao numericos do mes
+			temp = data.split("/")[1];
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp.charAt(i) >= '0' && temp.charAt(i) <= '9')
+					aux.append(temp.charAt(i));
+			}
+			// Inicializa o mes
+			mes = Integer.parseInt(aux.toString());
+			if (mes < 0 && mes > 13)
+				mes = 0;
+			//Limpa a string auxiliar
+			aux = new StringBuilder();
+
+			// Tira os caracteres nao numericos do ano
+			temp = data.split("/")[2];
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp.charAt(i) >= '0' && temp.charAt(i) <= '9')
+					aux.append(temp.charAt(i));
+			}
+			// Inicializa o ano
+			ano = Integer.parseInt(aux.toString());
+			aux = new StringBuilder();
+
+		}
+	}
+
+	public DataDeNasc(int dia, int mes, int ano) {
+		this.dia = dia;
+		this.mes = mes;
+		this.ano = ano;
+		this.data = dia + " " + mes + " " + ano;
+	}
+
+	public boolean isValid() {
+
+		if (this.ano > 0 && this.mes > 0 && this.dia > 0 && this.ano < Calendar.getInstance().get(Calendar.YEAR)
+				&& this.mes < Calendar.getInstance().get(Calendar.MONTH)
+				&& this.dia < Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+				&& this.ano > Calendar.getInstance().get(Calendar.YEAR) - 200) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isValid(String data) {
+		DataDeNasc d = new DataDeNasc(data);
+		if (d.isValid())
+			return true;
+		return false;
+	}
+
+	public int idade(){
+		GregorianCalendar hoje = new GregorianCalendar();
+		int anoAtual = hoje.get(Calendar.YEAR), mesAtual = hoje.get(Calendar.MONTH), diaAtual = hoje.get(Calendar.DAY_OF_MONTH);
+		int idade = anoAtual - this.ano;
+		if(this.ano == 0)
+			return 0;
+		if(this.mes == mesAtual && diaAtual < this.dia)
+			idade--;
+		if(mesAtual < this.mes)			
+			idade--;
+		return idade;
 	}
 	
+	public static int idade(DataDeNasc d){
+		return d.idade();
+	}
 	
 	public int getDia() {
 		return dia;
@@ -85,27 +130,10 @@ public class DataDeNasc {
 		this.ano = ano;
 	}
 
-	public boolean isValid(){
-		
-		if(this.ano > 0 && this.mes > 0 && this.dia > 0 && this.ano < Calendar.getInstance().get(Calendar.YEAR) 
-			&& this.mes < Calendar.getInstance().get(Calendar.MONTH) && this.dia < Calendar.getInstance().get(Calendar.DAY_OF_MONTH) 
-			&& this.ano > Calendar.getInstance().get(Calendar.YEAR) -200){
-				return true;
-		}
-		return false;
-	}
-	
-	public static boolean isValid(String data){
-		DataDeNasc d = new DataDeNasc(data);
-		if(d.getAno() < Calendar.getInstance().get(Calendar.YEAR) && d.getMes() < Calendar.getInstance().get(Calendar.MONTH) && d.getDia() < Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
-			return true;
-		return false;
-	}
-	
-	public String toString(){
-		if(this.data ==null)
+	public String toString() {
+		if (this.data == null)
 			return "Data nao inserida";
-		if(isValid())
+		if (isValid())
 			return "Data de nascimento invalida";
 		return this.data;
 	}
