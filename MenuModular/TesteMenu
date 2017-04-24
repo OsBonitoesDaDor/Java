@@ -1,0 +1,29 @@
+package common;
+
+public class TesteMenu {
+	//Implementacao da classe Menu
+	public static void main(String[] args){
+		//ID das opcoes, nao precisa ser variavel
+		final int opcao1 = 1, opcao2 = 2, opcao3 = 3, opcaoSair = 0;
+		//Lista com as opcoes. Indices pares tem o ID, impares a descricao. O ID é anexado a proxima descricao
+		String[] opcoes  = {String.valueOf(opcao1), "addTreta", String.valueOf(opcao2), "removeTreta", String.valueOf(opcao3), "fodase", String.valueOf(opcaoSair), "sair"};
+		Menu menu =  new Menu(opcoes);
+		menu.drawMenu();
+		switch(menu.getInput()){
+		case opcao1:
+			//Chama metodo da opcao 1
+			break;
+		case opcao2:
+
+			//Chama metodo da opcao 2
+			break;
+			
+		case opcao3:
+
+			//Chama metodo da opcao 3
+			break;
+		case opcaoSair:
+			return;
+		}
+	}
+}
