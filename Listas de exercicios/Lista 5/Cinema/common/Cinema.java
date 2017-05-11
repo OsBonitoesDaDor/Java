@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Cinema {
 	private static Scanner scan = new Scanner(System.in);
 
-	private static int temp;
 	private static int idSalas = 1;
 
 	private static ArrayList<Sala> salas = new ArrayList<Sala>();
@@ -36,26 +35,11 @@ public class Cinema {
 				break;
 			case 6:
 				//Pode bugar
-				System.out.println("Qual a sala da sessao?");
-				temp = scan.nextInt();
-				for (Sala s : salas) {
-					if(s.getId() == temp){
-						System.out.println("Qual o horario da sessao");
-						for (Sessao a : s.getSessoes()) {
-							temp = scan.nextInt();
-							if(a.getHorario() == temp)
-								mostraFinanceiro(a.getHorario(), s);
-						}
-					}
-				}
+				mostraFinanceiro();
 				break;
 			case 7:
 				//Pode bugar
-				System.out.println("Qual a sala que gostaria de ver o saldo financeiro?");
-				temp = scan.nextInt();
-				for (Sala s : salas)
-					if(s.getId() == temp)
-						mostraFinanceiro(s);
+			
 				break;
 			case 8:
 				return;
@@ -64,6 +48,57 @@ public class Cinema {
 
 	}
 	
+	private static int montanteSessao(Sala sala, Sessao sessao){
+		int iVendidos = 0, numMeias = 0, numInteiras = 0;
+		for (Ingresso i : ingressosVendidos) {
+			if(i.getSala() == sala.getId() && i.getHorario() == sessao.getHorario()){
+				iVendidos++;
+				numMeias = i.isMeia() ? numMeias + 1 : numMeias;
+			}
+		}
+		numInteiras = iVendidos - numMeias;
+		System.out.printf("Foram vendidas para a sessao das %d, %d meias e %d inteiras",sessao.getHorario(), numInteiras, numMeias);
+		return numInteiras * 22 + numMeias *11;
+		
+	}
+	private static void mostraFinanceiro(){
+		int idSala, montante = 0;
+		String nomeSessao;
+		Sala sala = null;
+		
+		
+		System.out.println("Qual a sala que deseja veirificar? ");
+		idSala = scan.nextInt();
+		for (Sala s : salas) 
+			if(s.getId() == idSala)
+				sala = s;
+			
+		if(sala == null){
+			System.out.println("Sala inexistente, tente novamente"); 
+			return ;
+		}
+	
+		System.out.println("Qual a sessao que deseja veirifcar? Enter para mostrar o montante total da sala");
+		nomeSessao= scan.nextLine();
+		nomeSessao= scan.nextLine();
+		
+		if(nomeSessao.equals(null))
+			for (Sessao s : sala.getSessoes()) 
+				montante += montanteSessao(sala,  s);
+		else{
+			for (Sessao s : sala.getSessoes()) {
+				if(s.getHorario() == Integer.parseInt(nomeSessao)){
+					System.out.println("To AQUI");
+					montante =+ montanteSessao(sala, s);
+					break;
+				}
+			}
+		}
+		System.out.printf("O montante foi %d\n", montante);	
+		
+	}
+	
+	/*
 	private static void mostraFinanceiro(Sala sala){
 		int cont = 0;
 		for (Sessao s : sala.getSessoes()) {
@@ -88,7 +123,7 @@ public class Cinema {
 		return arrecadado;
 		
 	}
-
+*/
 	//Esse metodo mostra uma poltrona especifica em uma sessao e sala 
 	private static void mostraPoltronaOcupada(){
 		int idSala, sessao;
