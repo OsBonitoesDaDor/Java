@@ -4,23 +4,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-	
+
 	private static ArrayList<String> marcasCadastradas = new ArrayList<String>();
 	private static ArrayList<Modelo> modelosCadastrados = new ArrayList<Modelo>();
-	
-	private static String[] opcoesDoMenu = {"1", "Cadastrar Marca", "2", "Cadastrar Modelo", "3", "Cadastrar entrada de um novo carro", "4", "Mostrar estacionamento", "5", "Retirar carro", "6", "Sair"};
+
+	private static String[] opcoesDoMenu = { "1", "Cadastrar Marca", "2", "Cadastrar Modelo", "3",
+			"Cadastrar entrada de um novo carro", "4", "Mostrar estacionamento", "5", "Retirar carro", "6", "Sair" };
 	private static Menu menu;
-	
+
 	private static Estacionamento e;
-	
+
 	private static Scanner scan = new Scanner(System.in);
-	
-	public static void main(String args[]){
+
+	public static void main(String args[]) {
 		menu = new Menu(opcoesDoMenu);
 		e = new Estacionamento();
-		do{
+		do {
 			menu.drawMenu();
-			switch(menu.getInput()){
+			switch (menu.getInput()) {
 			case 1:
 				addMarca();
 				break;
@@ -39,26 +40,26 @@ public class Main {
 			case 6:
 				return;
 			}
-		}while(true);
-				
+		} while (true);
+
 	}
-	
-	private static void retiraCarro(){
+
+	private static void retiraCarro() {
 		String entr, horaSaida;
 		float custo;
 		System.out.println("Me informe a placa ou o ID da vaga");
 		entr = scan.nextLine();
 		System.out.println("Que horas saiu?");
 		horaSaida = scan.nextLine();
-		if(entr.length() == 2)
+		if (entr.length() == 2)
 			custo = e.tiraCarro(Integer.valueOf(entr), horaSaida);
-		else{
+		else {
 			custo = e.tiraCarro(entr, horaSaida);
 		}
-		System.out.printf( "%s", (custo <= 0 ? "Erro nos dados, tente novamente!" : "Tudo certo, custou" + custo)  );
+		System.out.printf("%s", (custo <= 0 ? "Erro nos dados, tente novamente!" : "Tudo certo, custou" + custo));
 	}
-	
-	private static void addCarro(){
+
+	private static void addCarro() {
 		String op, placa;
 		Modelo m;
 		System.out.println("Qual o modelo do carro? Estes sao os cadastrados: ");
@@ -71,35 +72,66 @@ public class Main {
 		op = scan.nextLine();
 		e.addCarro(new Carro(placa, m, op));
 	}
-	
-	private static void addModelo(){
+
+	private static void addModelo() {
+		boolean inseriuId = true, achouMarca = false;
 		String marca;
 		System.out.println("Qual a marca? Essas sao as disponiveis: ");
 		mostraMarcas();
 		marca = scan.nextLine();
+		for (char c : marca.toCharArray()) {
+			if (c > '9' || c < '0') {
+				inseriuId = false;
+				break;
+			}
+		}
+
+		if (inseriuId)
+			marca = marcasCadastradas.get(1-Integer.parseInt(marca));
+		else {
+			// O for e o if checam se a marca existe
+			for (String s : marcasCadastradas) {
+				if (s.equals(marca)) {
+					achouMarca = true;
+					break;
+				}
+			}
+			if (!achouMarca) {
+				System.out.println("Marca invalida! Tente novamente");
+				return;
+			}
+
+		}
 		System.out.println("Qual o modelo do carro?");
-		modelosCadastrados.add(new Modelo(scan.nextLine(), marca));	
+		modelosCadastrados.add(new Modelo(scan.nextLine(), marca));
 	}
-	
-	private static void mostraModelos(){
+
+	/*TAVA DANDO BOSTA
+	 * private static void addModelo(){ String marca;
+	 * System.out.println("Qual a marca? Essas sao as disponiveis: ");
+	 * mostraMarcas(); marca = scan.nextLine();
+	 * System.out.println("Qual o modelo do carro?"); modelosCadastrados.add(new
+	 * Modelo(scan.nextLine(), marca)); }
+	 */
+	private static void mostraModelos() {
 		int cont = 0;
 		for (Modelo m : modelosCadastrados) {
 			cont++;
 			System.out.println(cont + "->" + m);
 		}
-		
+
 	}
-	
-	private static void mostraMarcas(){
+
+	private static void mostraMarcas() {
 		int cont = 0;
 		for (String string : marcasCadastradas) {
 			cont++;
 			System.out.println(cont + "\t->" + string);
 		}
 	}
-	
-	private static void addMarca(){
-		System.out.println("Entre com a marca: " );
+
+	private static void addMarca() {
+		System.out.println("Entre com a marca: ");
 		marcasCadastradas.add(scan.nextLine());
 	}
 }
