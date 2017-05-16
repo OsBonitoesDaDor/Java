@@ -7,7 +7,7 @@ public class Entrada {
 	/**
 	 * @return Proxima palavra digitada pelo usuario
 	 */
-	public String getNext(){
+	public String next(){
 		Scanner scan = new Scanner(System.in);
 		return scan.next();
 	}
@@ -15,7 +15,7 @@ public class Entrada {
 	/**
 	 * @return Proxima linha digitada pelo usuario
 	 */
-	public String getNextLine(){
+	public String nextLine(){
 		Scanner scan = new Scanner(System.in);
 		return scan.nextLine();
 	}
@@ -32,7 +32,7 @@ public class Entrada {
 	/**
 	 * @return Proximo float digitado pelo usuario
 	 */	
-	public float getFloat(){
+	public float nextFloat(){
 		Scanner scan = new Scanner(System.in);
 		return scan.nextFloat();
 	}
@@ -41,7 +41,7 @@ public class Entrada {
 	/**
 	 * @return Proximo double digitado pelo usuario
 	 */	
-	public double getDouble(){
+	public double nextDouble(){
 		Scanner scan = new Scanner(System.in);
 		return scan.nextDouble();
 	}
@@ -50,7 +50,7 @@ public class Entrada {
 	 * 
 	 * @return Proximo boolean digitado
 	 */
-	public boolean getBoolean(){
+	public boolean nextBoolean(){
 		Scanner scan = new Scanner(System.in);
 		return scan.nextBoolean();
 	}
