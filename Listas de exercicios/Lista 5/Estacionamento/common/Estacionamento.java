@@ -1,5 +1,3 @@
-package common;
-
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
