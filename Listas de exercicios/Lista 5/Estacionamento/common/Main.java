@@ -19,7 +19,9 @@ public class Main {
 	public static void main(String args[]) {
 		menu = new Menu(opcoesDoMenu);
 		e = new Estacionamento();
+		initTestes();
 		do {
+			initTestes();
 			menu.drawMenu();
 			switch (menu.getInput()) {
 			case 1:
@@ -44,6 +46,17 @@ public class Main {
 
 	}
 
+	private static void initTestes() {
+		marcasCadastradas.add("Honda");
+		marcasCadastradas.add("Chrevolet");
+		marcasCadastradas.add("Fiat");
+		marcasCadastradas.add("Ford");
+		modelosCadastrados.add(new Modelo("XRE 300", "Honda"));
+		modelosCadastrados.add(new Modelo("Celta", "Chrevolet"));
+		modelosCadastrados.add(new Modelo("Uno", "Fiat"));
+		modelosCadastrados.add(new Modelo("Ka", "Ford"));
+	}
+
 	private static void retiraCarro() {
 		String entr, horaSaida;
 		float custo;
@@ -51,12 +64,20 @@ public class Main {
 		entr = scan.nextLine();
 		System.out.println("Que horas saiu?");
 		horaSaida = scan.nextLine();
-		if (entr.length() == 2)
+		if(isInteger(entr))
 			custo = e.tiraCarro(Integer.valueOf(entr), horaSaida);
-		else {
+		else 
 			custo = e.tiraCarro(entr, horaSaida);
-		}
+		
 		System.out.printf("%s", (custo <= 0 ? "Erro nos dados, tente novamente!" : "Tudo certo, custou" + custo));
+	}
+
+	private static boolean isInteger(String s) {
+		for (char c : s.toCharArray())
+			if (c < '0' || c > '9')
+				return false;
+
+		return true;
 	}
 
 	private static void addCarro() {
@@ -65,7 +86,7 @@ public class Main {
 		System.out.println("Qual o modelo do carro? Estes sao os cadastrados: ");
 		mostraModelos();
 		op = scan.nextLine();
-		m = modelosCadastrados.get(1 - Integer.valueOf(op));
+		m = modelosCadastrados.get(Integer.valueOf(op) - 1);
 		System.out.println("Qual a placa do carro? ");
 		placa = scan.nextLine();
 		System.out.println("Qual a hora de chegada do carro?");
@@ -79,6 +100,9 @@ public class Main {
 		System.out.println("Qual a marca? Essas sao as disponiveis: ");
 		mostraMarcas();
 		marca = scan.nextLine();
+
+		// Checa se a entrada foi um numero um o nome da marca, se tem letra
+		// fode
 		for (char c : marca.toCharArray()) {
 			if (c > '9' || c < '0') {
 				inseriuId = false;
@@ -87,7 +111,7 @@ public class Main {
 		}
 
 		if (inseriuId)
-			marca = marcasCadastradas.get(1-Integer.parseInt(marca));
+			marca = marcasCadastradas.get(Integer.parseInt(marca) - 1);
 		else {
 			// O for e o if checam se a marca existe
 			for (String s : marcasCadastradas) {
@@ -106,13 +130,6 @@ public class Main {
 		modelosCadastrados.add(new Modelo(scan.nextLine(), marca));
 	}
 
-	/*TAVA DANDO BOSTA
-	 * private static void addModelo(){ String marca;
-	 * System.out.println("Qual a marca? Essas sao as disponiveis: ");
-	 * mostraMarcas(); marca = scan.nextLine();
-	 * System.out.println("Qual o modelo do carro?"); modelosCadastrados.add(new
-	 * Modelo(scan.nextLine(), marca)); }
-	 */
 	private static void mostraModelos() {
 		int cont = 0;
 		for (Modelo m : modelosCadastrados) {
