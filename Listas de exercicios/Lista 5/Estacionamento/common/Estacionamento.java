@@ -1,3 +1,5 @@
+package common;
+
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +15,7 @@ public class Estacionamento {
 	private void initEst(){
 		for (int i = 0; i < carros.length; i++) {
 			for (int j = 0; j < carros[i].length; j++) {
-				carros[i][j] = new Carro(null, new Modelo(), null);
+				carros[i][j] = new Carro();
 			}
 		}
 	}
@@ -25,7 +27,7 @@ public class Estacionamento {
 	public void addCarro(Carro c){
 		for (int i = 0; i < carros.length; i++) {
 			for (int j = 0; j < carros[i].length; j++) {
-				if(carros[i][j].getModelo().getModelo().equals("VAZIO")){
+				if(carros[i][j].getPlaca().equals("-VAZIO-")){
 					carros[i][j] = c;
 					System.out.println("O seu carro estara na vaga " + (i*10) + j);
 					return;
@@ -33,6 +35,7 @@ public class Estacionamento {
 			}
 		}
 	}
+	
 	
 	public float tiraCarro(int pos, String hSaida){
 		int lin = pos / 10, col = pos % 10;
@@ -53,7 +56,7 @@ public class Estacionamento {
 		do{
 			custo +=2.5;
 		}while((permanencia =- 15) > 1);
-		carros[lin][col] = new Carro(null, new Modelo(), null);
+		carros[lin][col] = new Carro();
 
 		
 		return custo;
@@ -70,7 +73,8 @@ public class Estacionamento {
 	public void drawEstacionamento(){
 		for (int i = 0; i < carros.length; i++) {
 			for (int j = 0; j < carros[i].length; j++) {
-				System.out.printf("%s\t", (carros[i][j].getModelo().getModelo().equals("VAZIO") ? "-VAZIO-" : carros[i][j].getPlaca()) );
+				//System.out.printf("\t%s", (carros[i][j].getPlaca().equals("VAZIO") ? "-VAZIO-" : carros[i][j].getPlaca()) );
+				System.out.print(" \t "+ carros[i][j].getPlaca());
 			}
 			System.out.println();
 		}
