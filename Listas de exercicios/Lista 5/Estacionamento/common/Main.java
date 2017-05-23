@@ -21,7 +21,6 @@ public class Main {
 		e = new Estacionamento();
 		initTestes();
 		do {
-			initTestes();
 			menu.drawMenu();
 			switch (menu.getInput()) {
 			case 1:
