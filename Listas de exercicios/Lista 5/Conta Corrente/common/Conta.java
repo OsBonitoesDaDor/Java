@@ -17,13 +17,15 @@ public class Conta {
 
 	public static void main(String args[]) {
 
-		operacoesRealizadas.add(new Operacao("deposito", 3000F, "12/12/12"));
-		operacoesRealizadas.add(new Operacao("saque", 200F, "9/12/12"));
-		operacoesRealizadas.add(new Operacao("cartao", 1000F, "15/12/12"));
-		operacoesRealizadas.add(new Operacao("cheque", 1500F, "22/12/12"));
-		for (Operacao op : operacoesRealizadas) {
-			System.out.println(op);
-		}
+		//Adicionados antes, para testar//////////////////////////////////////
+//		operacoesRealizadas.add(new Operacao("deposito", 3000F, "12/2/12"));
+//		operacoesRealizadas.add(new Operacao("saque", 200F, "9/2/12"));
+//		operacoesRealizadas.add(new Operacao("cartao", 1000F, "15/3/12"));
+//		operacoesRealizadas.add(new Operacao("cheque", 1500F, "22/4/12"));
+//		for (Operacao op : operacoesRealizadas) {
+//			System.out.println(op);
+//		}
+		/////////////////////////////////////////////////////////////////////
 		do {
 			menu.drawMenu();
 			switch (menu.getInput()) {
@@ -62,6 +64,7 @@ public class Conta {
 
 	private static float saldoNoMes(int mes) {
 		float entrada = 0, saida = 0;
+		System.out.println(mes);
 		if (mes <= 0 || mes >= 13) {
 			System.out.println("Mes invalido! Tente novamente");
 			return 0F;
@@ -93,7 +96,7 @@ public class Conta {
 		// Esse for checa se o usuario entrou o nome do mes (Janeiro) ou o
 		// numero(1)
 		for (char c : entrada.toCharArray()) {
-			if (c < '0' || c > '9') {
+			if ((c <= '0' || c >= '9') && c != ' ') {
 				mesPorNumero = false;
 			}
 		}
@@ -121,13 +124,13 @@ public class Conta {
 			System.out.println("----------------------------------------------------------------");
 			System.out.println("O saldo no mes foi de " + res);
 		}else{
-			if(mes1 > mes2){
-				for (int i = mes1; i < mes2; i++) {
+			if(mes1 < mes2){
+				for (int i = mes1; i <= mes2; i++) {
 					res += saldoNoMes(i);
 					System.out.println("----------------------------------------------------------------");
 				}
 			}else{
-				for (int i = mes2; i < mes1; i++) {
+				for (int i = mes2; i <= mes1; i++) {
 					res += saldoNoMes(i);
 					System.out.println("----------------------------------------------------------------");
 				}
