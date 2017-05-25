@@ -88,7 +88,6 @@ public class Cinema {
 		else{
 			for (Sessao s : sala.getSessoes()) {
 				if(s.getHorario() == Integer.parseInt(nomeSessao)){
-					System.out.println("To AQUI");
 					montante =+ montanteSessao(sala, s);
 					break;
 				}
@@ -155,6 +154,7 @@ public class Cinema {
 		sala = scan.nextInt();
 		System.out.println("Qual o horario da sessao?");
 		horario = scan.nextInt();
+		mostraSessao2(sala,horario);
 		System.out.println("Qual poltrona gostaria?");
 		idPolt = scan.nextLine();
 		idPolt = scan.nextLine();
@@ -223,6 +223,24 @@ public class Cinema {
 				}
 		System.out.println("Horario indisponivel, tente mais tarde!");
 	}
+	
+	private static int mostraSessao2(int salaEscolhida, int sassaoEscolhida) {
+		Sala sala = null;
+		for (Sala s : salas)
+			if (s.getId() == salaEscolhida)
+				sala = s;
+		if (sala == null) {
+			System.out.println("Sala nao encontrada, tente novamente!");
+			return 0;
+		}
+		for (Sala s : salas)
+			for (int i = 0; i < s.getNumSessoes(); i++)
+				if (s.getSessaoAt(i).getHorario() == sassaoEscolhida){
+					s.getSessaoAt(i).printCadeiras();	
+					return 1;
+				}
+		return 0;
+	}
 	//Mostra as salas com suas sessoes
 	private static void listaSalas() {
 		for (Sala s : salas) {
@@ -233,12 +251,16 @@ public class Cinema {
 	private static void addSala() {
 		ArrayList<Sessao> ses = new ArrayList<Sessao>();
 		System.out.println("Entre com a sessao das 14h: ");
+		scan.nextLine();
 		ses.add(new Sessao(scan.nextLine(), 14));
 		System.out.println("Entre com a sessao das 16h: ");
+		scan.nextLine();
 		ses.add(new Sessao(scan.nextLine(), 16));
 		System.out.println("Entre com a sessao das 18h: ");
+		scan.nextLine();
 		ses.add(new Sessao(scan.nextLine(), 18));
 		System.out.println("Entre com a sessao das 20h: ");
+		scan.nextLine();
 		ses.add(new Sessao(scan.nextLine(), 20));
 
 		salas.add(new Sala(idSalas, ses));
