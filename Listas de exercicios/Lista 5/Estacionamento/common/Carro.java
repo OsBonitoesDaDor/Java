@@ -4,18 +4,14 @@ import java.util.GregorianCalendar;
 
 public class Carro {
 
-	public void setHoraEntrada(GregorianCalendar horaEntrada) {
-		this.horaEntrada = horaEntrada;
-	}
-
+	private Marca marca;
 	private String placa;
-	Modelo modelo;
-	GregorianCalendar horaEntrada;
+	private GregorianCalendar horaEntrada;
 
-	public Carro(String placa, Modelo modelo, String hEntrada) {
+	public Carro(String placa, Marca marca, String hEntrada, String modelo) {
 		super();
 		this.placa = placa;
-		this.modelo = modelo;
+		this.marca = marca;
 		horaEntrada = stringToGreg(hEntrada);
 	}
 
@@ -40,12 +36,15 @@ public class Carro {
 		return horaEntrada.get(GregorianCalendar.MINUTE);
 	}
 
-	public Modelo getModelo() {
-		return modelo;
+	public Marca getMarca() {
+		return marca;
+	}
+	public void setHoraEntrada(GregorianCalendar horaEntrada) {
+		this.horaEntrada = horaEntrada;
 	}
 
-	public void setModelo(Modelo modelo) {
-		this.modelo = modelo;
+	public void setModelo(Marca modelo) {
+		this.marca = modelo;
 	}
 
 	public void setPlaca(String placa) {
